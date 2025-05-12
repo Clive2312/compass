@@ -1,5 +1,6 @@
 import os
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 from script.artifact.graph.accuracy_cal import *
 
@@ -177,6 +178,6 @@ def render_figure8():
     os.makedirs('./eval_fig', exist_ok=True)
     plt.savefig('./eval_fig/figure8.pdf') 
 
-
 if __name__ == "__main__":
-    render_figure8()
+    # render_figure8()
+    render_figure8_trip()

@@ -254,10 +254,16 @@ void OramRing::early_reshuffle(vector<int> buckets){
             }
         }
 
+        // cout << "valid z: " << z << endl;
+
         for(int j = 0; j < bucket_size; j++){
             if(z >= real_bucket_size){
                 break;
             }
+            // cout << "j: " << j << endl;
+            // cout << "metadata[pos].block_ids[j]: " << metadata[pos].block_ids[j] << endl;
+            // cout << "metadata[pos].valids[j]: " << metadata[pos].valids[j] << endl;
+
             if(metadata[pos].block_ids[j] == -1 && metadata[pos].valids[j] == 1){
                 // valid empty block
                 positions.push_back(pos);
@@ -268,8 +274,14 @@ void OramRing::early_reshuffle(vector<int> buckets){
         }
 
         if(z < real_bucket_size){
+            cout << "bucket size: " << bucket_size << endl;
+            cout << "real_bucket_size: " << real_bucket_size << endl;
+            cout << "z: " << z << endl;
             metadata[pos].print_stat();
+            assert(0);
         }
+
+        assert(z == real_bucket_size);
 
         // cout << "pos: " << pos << endl;
         // cout << "z: " << z << endl;
@@ -316,6 +328,49 @@ void OramRing::early_reshuffle(vector<int> buckets){
 
 std::vector<int*> OramRing::access(std::vector<Operation> ops, std::vector<int> blockIndices, std::vector<int*> newdata, int pad_l){
     if(batching){
+
+        // a workaround for super large batch size
+        int num_remote_roots = 1 << (num_cached_levels);
+        int max_batch_size = num_remote_roots * dummy_size / 2;
+        if( pad_l > max_batch_size){
+            cout << "split large batch" << endl;
+            vector<int*> res;
+            int cnt_request = 0;
+            int remain_requests = pad_l;
+            while(remain_requests > 0){
+                int tmp_batch_size = (remain_requests > max_batch_size) ? max_batch_size : remain_requests;
+                std::vector<Operation> tmp_ops = {};
+                std::vector<int> tmp_block_indices = {};
+                std::vector<int*> tmp_new_data = {};
+                if(ops.size() >= cnt_request + tmp_batch_size){
+                    // all real request
+                    tmp_ops = std::vector<Operation>(ops.begin() + cnt_request, ops.begin() + tmp_batch_size);
+                    tmp_block_indices = std::vector<int>(blockIndices.begin() + cnt_request, blockIndices.begin() + tmp_batch_size);
+                    tmp_new_data = std::vector<int*>(newdata.begin() + cnt_request, newdata.begin() + tmp_batch_size);
+                } else if (ops.size() > cnt_request){
+                    // partial real request
+                    tmp_ops = std::vector<Operation>(ops.begin() + cnt_request, ops.end());
+                    tmp_block_indices = std::vector<int>(blockIndices.begin() + cnt_request, blockIndices.end());
+                    tmp_new_data = std::vector<int*>(newdata.begin() + cnt_request, newdata.end());
+                }
+                // other wise empty is fine
+
+                vector<int*> tmp_result = batch_multi_access_swap_ro(
+                    tmp_ops,
+                    tmp_block_indices,
+                    tmp_new_data,
+                    tmp_batch_size
+                );
+                res.insert(res.end(), tmp_result.begin(), tmp_result.end());
+                cnt_request += tmp_batch_size;
+                remain_requests -= tmp_batch_size;
+            }
+
+            return res;
+        } else{
+            return batch_multi_access_swap_ro(ops, blockIndices, newdata, pad_l);
+        }
+
         return batch_multi_access_swap_ro(ops, blockIndices, newdata, pad_l);
     } else{
         vector<int*> ret;
@@ -351,8 +406,6 @@ std::vector<int*> OramRing::access(std::vector<Operation> ops, std::vector<int> 
 
 
 std::vector<int*> OramRing::batch_multi_access_swap_ro(std::vector<Operation> ops, std::vector<int> blockIndices, std::vector<int*> newdata , int pad_l){
-
-    // cout << "Entering bmasr" << endl;
     std::vector<int*> ret;
 
     // check each bucket on the paths to see if early reshuffle is required
