@@ -65,7 +65,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # clustering_trip_latency_lan = []
     # clustering_trip_latency_wan = []
 
-    vanilla_hnsw_acc = [0.977]
+    vanilla_hnsw_acc = [0.991]
     vanilla_hnsw_latency_lan = [0.0036]
     vanilla_hnsw_latency_wan = [0.0906]
 
@@ -89,8 +89,8 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     ax4.set_xscale('log')
     ax4.set_xticks([ 0.001, 0.01, 0.1, 1, 10, 100])
     ax4.set_xlim(0.001, 100)
-    ax4.set_yticks([ 0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
-    ax4.set_ylim(0, 1.05)
+    ax4.set_yticks([0.4, 0.6, 0.8, 1.0])
+    ax4.set_ylim(0.4, 1.05)
 
     ax4.grid(True, zorder=0, linewidth=0.5)
     ax4.set_axisbelow(True)
@@ -107,7 +107,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # clustering_trip_latency_lan = []
     # clustering_trip_latency_wan = []
 
-    vanilla_hnsw_acc = [0.953]
+    vanilla_hnsw_acc = [0.9673]
     vanilla_hnsw_latency_lan = [0.0064]
     vanilla_hnsw_latency_wan = [0.1205]
 
@@ -131,8 +131,8 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     ax3.set_xscale('log')
     ax3.set_xticks([ 0.001, 0.01, 0.1, 1, 10, 100])
     ax3.set_xlim(0.001, 100)
-    ax3.set_yticks([ 0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
-    ax3.set_ylim(0, 1.05)
+    ax3.set_yticks([ 0.4, 0.6, 0.8, 1.0])
+    ax3.set_ylim(0.4, 1.05)
 
     # ax3.annotate(annotation_text, xy=(5, 5), xytext=(5, 5),
     #                 arrowprops=arrow_props)
@@ -154,7 +154,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # clustering_trip_latency_lan = []
     # clustering_trip_latency_wan = []
 
-    vanilla_hnsw_acc = [0.291]
+    vanilla_hnsw_acc = [0.3018579268795907]
     vanilla_hnsw_latency_lan = [0.0154]
     vanilla_hnsw_latency_wan = [0.1654]
 
@@ -181,6 +181,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     ax2.set_xlabel('Latency (s)', fontsize=14)
     # ax2.set_ylabel('Y Coordinate')
     ax2.set_xscale('log')
+    # ax2.xaxis.set_label_coords(0.5, -0.15)
     ax2.set_xticks([ 0.01, 0.1, 1, 10, 100, 1000])
     ax2.set_xlim(0.01, 1000)
     ax2.set_yticks([ 0.1, 0.2, 0.3, 0.4])
@@ -188,6 +189,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # ax2.legend()
     ax2.grid(True, zorder=0, linewidth=0.5)
     ax2.set_axisbelow(True)
+    ax2.minorticks_off()
 
     # Plot on the third subplot
     # tfidf_trip_acc = 
@@ -202,7 +204,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # clustering_trip_latency_lan = []
     # clustering_trip_latency_wan = []
 
-    vanilla_hnsw_acc = [0.342]
+    vanilla_hnsw_acc = [0.3652959703461136]
     vanilla_hnsw_latency_lan = [0.0154]
     vanilla_hnsw_latency_wan = [0.2054]
 
@@ -227,7 +229,7 @@ def render_latency_mrr(compass_acc, compass_lat, cluster_acc, cluster_lat, tfidf
     # ax1.set_ylabel('Y Coordinate')
     ax1.set_xscale('log')
     ax1.set_xlabel('Latency (s)', fontsize=14)
-    ax1.xaxis.set_label_coords(0.5, -0.15)
+    # ax1.xaxis.set_label_coords(0.5, -0.15)
     ax1.set_xticks([ 0.01, 0.1, 1, 10, 100, 1000, 10000])
     ax1.set_xlim(0.01, 10000)
     ax4.set_ylabel('MRR@10', fontsize=14)
