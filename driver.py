@@ -12,7 +12,6 @@ from script.artifact.graph.latency_breakdown import render_figure7
 from script.artifact.graph.communication import pretty_print_comm
 from script.artifact.graph.memory_consumption import pretty_print_mem
 from script.artifact.graph.ablation_study import render_figure8
-from script.artifact.graph.ablation_study_full import render_figure8_all
 
 def run_performance(verbose):
     s_instance = create_instance(server_config, "ae-perf-server")
@@ -37,32 +36,30 @@ def run_performance(verbose):
 
 
 def run_ablation(verbose):
-    # s_instance = create_instance(server_config, "cmr-ablation-server")
-    # c_instance = create_instance(client_config, "cmr-ablation-client")
+    s_instance = create_instance(server_config, "ae-ablation-server")
+    c_instance = create_instance(client_config, "ae-ablation-client")
 
-    # exit()
+    check_ssh_instances([s_instance, c_instance])
 
-    # check_ssh_instances([s_instance, c_instance])
+    # c_instance = {
+    #     "name": "ae-client",
+    #     "internal_ip": "10.128.0.43"
+    # }
 
-    c_instance = {
-        "name": "cmr-ablation-client",
-        "internal_ip": "10.128.0.25"
-    }
-
-    s_instance = {
-        "name": "cmr-ablation-server",
-        "internal_ip": "10.128.0.23"
-    }
+    # s_instance = {
+    #     "name": "ae-server",
+    #     "internal_ip": "10.128.0.42"
+    # }
 
     # accuracy 
     # run_ablation_accuracy(s_instance, verbose)
-    # run_ablation_accuracy_optimized_laion(s_instance, verbose)
+    run_ablation_accuracy_optimized(s_instance, verbose)
 
     # latency
-    run_ablation_latency_laion(s_instance, c_instance, verbose)
+    run_ablation_latency(s_instance, c_instance, verbose)
 
-    # delete_instance(PROJECT_ID, ZONE, s_instance["name"])
-    # delete_instance(PROJECT_ID, ZONE, c_instance["name"])
+    delete_instance(PROJECT_ID, ZONE, s_instance["name"])
+    delete_instance(PROJECT_ID, ZONE, c_instance["name"])
 
 def run_tp(verbose):
     s_instance = create_instance(server_config, "ae-server-2")
@@ -126,11 +123,7 @@ if __name__ == "__main__":
             elif args.plot == "table4":
                 pretty_print_mem()
             elif args.plot == "figure8":
-                # render_figure8()
-                # render_figure8_trip()
-                # render_figure8_sift()
-                # render_figure8_laion()
-                render_figure8_all()
+                render_figure8()
 
         
     except subprocess.CalledProcessError as e:

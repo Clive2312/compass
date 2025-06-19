@@ -1,6 +1,11 @@
 import os
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42  # Use TrueType fonts
+matplotlib.rcParams['ps.fonttype'] = 42
+
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+import math
 
 from script.artifact.graph.accuracy_cal import *
 
@@ -131,8 +136,8 @@ from script.artifact.graph.accuracy_cal import *
 #     ax1.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.025, "efspec=1")
 #     ax1.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='>', linestyle='-', zorder=2, markersize = 5)
-#     ax1.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 5)
+#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='s', linestyle='-', zorder=2, markersize = 4)
+#     ax1.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 4)
 
 #     ax1.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", label="Compass", marker="*", s=100 , zorder=3)
 
@@ -147,14 +152,14 @@ from script.artifact.graph.accuracy_cal import *
 #     ax1.set_yticks([ 0.17, 0.20, 0.23, 0.26, 0.29])
 #     ax1.set_ylim(0.16, 0.32)
 #     # ax1.legend()
-#     ax1.grid(True, linestyle='--')
+#     ax1.grid(True, linestyle='-')
 #     ax1.spines['right'].set_color('gray')
 
 #     print(nobatch_x)
 #     ax2.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
 #     ax2.set_xlim(75, 77)
 #     ax2.set_xticks([75, 76, 77])
-#     ax2.grid(True, linestyle='--')
+#     ax2.grid(True, linestyle='-')
 #     ax1.set_ylim(0.16, 0.32)
 #     ax2.spines['left'].set_color('gray')
 #     ax2.tick_params(axis='y', left=False)
@@ -304,8 +309,8 @@ from script.artifact.graph.accuracy_cal import *
 #     ax1.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.025, "efspec=1")
 #     ax1.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='>', linestyle='-', zorder=2, markersize = 5)
-#     ax1.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 5)
+#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='s', linestyle='-', zorder=2, markersize = 4)
+#     ax1.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 4)
 
 #     ax1.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", label="Compass", marker="*", s=100 , zorder=3)
 
@@ -320,14 +325,14 @@ from script.artifact.graph.accuracy_cal import *
 #     # ax1.set_yticks([ 0.17, 0.20, 0.23, 0.26, 0.29])
 #     ax1.set_ylim(0.6, 1.0)
 #     # ax1.legend()
-#     ax1.grid(True, linestyle='--')
+#     ax1.grid(True, linestyle='-')
 #     ax1.spines['right'].set_color('gray')
 
 #     print(nobatch_x)
 #     ax2.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
 #     ax2.set_xlim(21, 22)
 #     ax2.set_xticks([21, 22])
-#     ax2.grid(True, linestyle='--')
+#     ax2.grid(True, linestyle='-')
 #     ax2.set_ylim(0.6, 1.0)
 #     ax2.spines['left'].set_color('gray')
 #     ax2.tick_params(axis='y', left=False)
@@ -481,8 +486,8 @@ from script.artifact.graph.accuracy_cal import *
 #     ax1.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.025, "efspec=1")
 #     ax1.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='>', linestyle='-', zorder=2, markersize = 5)
-#     ax1.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 5)
+#     ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn=[1, 256]", marker='s', linestyle='-', zorder=2, markersize = 4)
+#     ax1.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec=[1, 16]" , zorder=2, markersize = 4)
 
 #     ax1.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", label="Compass", marker="*", s=100 , zorder=3)
 
@@ -497,14 +502,14 @@ from script.artifact.graph.accuracy_cal import *
 #     # ax1.set_yticks([ 0.17, 0.20, 0.23, 0.26, 0.29])
 #     ax1.set_ylim(0.4, 1.05)
 #     # ax1.legend()
-#     ax1.grid(True, linestyle='--')
+#     ax1.grid(True, linestyle='-')
 #     ax1.spines['right'].set_color('gray')
 
 #     print(nobatch_x)
 #     ax2.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
 #     ax2.set_xlim(11, 13)
 #     ax2.set_xticks([11, 12, 13])
-#     ax2.grid(True, linestyle='--')
+#     ax2.grid(True, linestyle='-')
 #     ax2.set_ylim(0.4, 1.05)
 #     ax2.spines['left'].set_color('gray')
 #     ax2.tick_params(axis='y', left=False)
@@ -657,12 +662,34 @@ def render_figure8_all():
     # ax1.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.025, "efspec=1")
     # ax1.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-    ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,256]", marker='>', linestyle='-', zorder=2, markersize = 5)
-    ax1.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec:[1,16]" , zorder=2, markersize = 5)
+    ax1.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,256]", marker='s', linestyle='-', zorder=2, markersize = 4)
+    ax1.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec:[1,16]" , zorder=2, markersize = 4)
 
-    ax1.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100 , zorder=3)
+    diff_y = ef_neighbor_y[-1] - ef_neighbor_y[-2]
+    diff_x = ef_neighbor_x[-1] - ef_neighbor_x[-2]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax1.annotate(
+        '', 
+        xy=(ef_neighbor_x[-1] - diff_x*0.25, ef_neighbor_y[-1] - diff_y*0.25 - 0.01), xycoords='data',
+        xytext=(ef_neighbor_x[-1], ef_neighbor_y[-1] - 0.01), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#fd8282", mutation_scale=10),
+    )
 
-    ax1.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="*", s=100 , zorder=3)
+    diff_y = ef_spec_y[-2] - ef_spec_y[-1]
+    diff_x = ef_spec_x[-2] - ef_spec_x[-1]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax1.annotate(
+        '', 
+        xy=(ef_spec_x[-1] + diff_x*0.8 + 0.2, ef_spec_y[-1]+ diff_y*0.8), xycoords='data',
+        xytext=(ef_spec_x[-1] + 0.2, ef_spec_y[-1]), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#019e73", mutation_scale=10),
+    )
+
+    ax1.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100, zorder=3)
+
+    ax1.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="p", s=60 , zorder=3)
 
     ax1.set_title('MS MARCO', fontsize=14)
     ax1.set_xlabel('Latency (s)', fontsize=14, labelpad = 0)
@@ -673,14 +700,14 @@ def render_figure8_all():
     ax1.set_yticks([0.16, 0.22, 0.28, 0.34, 0.40])
     ax1.set_ylim(0.16, 0.40)
     ax1.legend(loc='lower right', edgecolor='none', handletextpad=0.3, labelspacing=0.2, borderpad=0.25, borderaxespad=0.2, handlelength=1.5)
-    ax1.grid(True, linestyle='--')
+    ax1.grid(True, linestyle='-')
     ax1.spines['right'].set_color('gray')
 
 
-    ax2.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
+    ax2.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="^", s=60 , zorder=3)
     ax2.set_xlim(104, 106)
     ax2.set_xticks([105])
-    ax2.grid(True, linestyle='--')
+    ax2.grid(True, linestyle='-')
     ax2.set_ylim(0.16, 0.40)
     ax2.set_yticks([0.16, 0.22, 0.28, 0.34, 0.40])
     ax2.spines['left'].set_color('gray')
@@ -793,12 +820,34 @@ def render_figure8_all():
     # ax3.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.025, "efspec=1")
     # ax3.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-    ax3.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,256]", marker='>', linestyle='-', zorder=2, markersize = 5)
-    ax3.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec:[1,16]" , zorder=2, markersize = 5)
+    ax3.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,256]", marker='s', linestyle='-', zorder=2, markersize = 4)
+    ax3.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec:[1,16]" , zorder=2, markersize = 4)
 
-    ax3.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100 , zorder=3)
+    diff_y = ef_neighbor_y[-1] - ef_neighbor_y[-2]
+    diff_x = ef_neighbor_x[-1] - ef_neighbor_x[-2]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax3.annotate(
+        '', 
+        xy=(ef_neighbor_x[-1] - diff_x*0.3, ef_neighbor_y[-1] - diff_y*0.3 - 0.008), xycoords='data',
+        xytext=(ef_neighbor_x[-1], ef_neighbor_y[-1] - 0.008), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#fd8282", mutation_scale=10),
+    )
 
-    ax3.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="*", s=100 , zorder=3)
+    diff_y = ef_spec_y[-2] - ef_spec_y[-1]
+    diff_x = ef_spec_x[-2] - ef_spec_x[-1]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax3.annotate(
+        '', 
+        xy=(ef_spec_x[-1] + diff_x*0.4 + 0.2, ef_spec_y[-1]+ diff_y*0.4), xycoords='data',
+        xytext=(ef_spec_x[-1] + 0.2, ef_spec_y[-1]), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#019e73", mutation_scale=10),
+    )
+
+    ax3.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100, zorder=3)
+
+    ax3.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="p", s=60 , zorder=3)
 
     ax3.set_title('TripClick', fontsize=14)
     ax3.set_xlabel('Latency (s)', fontsize=14, labelpad = 0)
@@ -809,14 +858,14 @@ def render_figure8_all():
     ax3.set_yticks([0.15, 0.19, 0.23, 0.27, 0.31])
     ax3.set_ylim(0.15, 0.31)
     ax3.legend(loc='lower right', edgecolor='none', handletextpad=0.3, labelspacing=0.2, borderpad=0.25, borderaxespad=0.2, handlelength=1.5)
-    ax3.grid(True, linestyle='--')
+    ax3.grid(True, linestyle='-')
     ax3.spines['right'].set_color('gray')
 
     print(nobatch_x)
-    ax4.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
+    ax4.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="^", s=60 , zorder=3)
     ax4.set_xlim(75, 77)
     ax4.set_xticks([76])
-    ax4.grid(True, linestyle='--')
+    ax4.grid(True, linestyle='-')
     ax4.set_yticks([0.15, 0.19, 0.23, 0.27, 0.31])
     ax4.set_ylim(0.15, 0.31)
     ax4.spines['left'].set_color('gray')
@@ -925,12 +974,34 @@ def render_figure8_all():
     # ax5.text(ef_spec_x[0] - 0.3, ef_spec_y[0] - 0.03, "efspec=1")
     # ax5.text(ef_spec_x[-1] + 0.25, ef_spec_y[-1] - 0.01, "efspec=16")
 
-    ax5.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,128]", marker='>', linestyle='-', zorder=2, markersize = 5)
-    ax5.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec:[1,8]" , zorder=2, markersize = 5)
+    ax5.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,128]", marker='s', linestyle='-', zorder=2, markersize = 4)
+    ax5.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec:[1,8]" , zorder=2, markersize = 4)
 
-    ax5.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100 , zorder=3)
+    diff_y = ef_neighbor_y[-1] - ef_neighbor_y[-2]
+    diff_x = ef_neighbor_x[-1] - ef_neighbor_x[-2]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax5.annotate(
+        '', 
+        xy=(ef_neighbor_x[-1] - diff_x*1.2, ef_neighbor_y[-1] - diff_y*1.2 + 0.02), xycoords='data',
+        xytext=(ef_neighbor_x[-1], ef_neighbor_y[-1] + 0.02), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#fd8282", mutation_scale=10),
+    )
 
-    ax5.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="*", s=100 , zorder=3)
+    diff_y = ef_spec_y[-2] - ef_spec_y[-1]
+    diff_x = ef_spec_x[-2] - ef_spec_x[-1]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax5.annotate(
+        '', 
+        xy=(ef_spec_x[-1] + diff_x*0.4 - 0.1, ef_spec_y[-1]+ diff_y*0.4), xycoords='data',
+        xytext=(ef_spec_x[-1] - 0.1, ef_spec_y[-1]), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#019e73", mutation_scale=10),
+    )
+
+    ax5.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", marker="*", s=100, zorder=3)
+
+    ax5.scatter(nolazy_x, nolazy_y, color="#0072B2", marker="p", s=60 , zorder=3)
 
     ax5.set_title('SIFT1M', fontsize=14)
     ax5.set_xlabel('Latency (s)', fontsize=14, labelpad = 0)
@@ -941,14 +1012,14 @@ def render_figure8_all():
     ax5.set_yticks([0.6, 0.70, 0.80, 0.90, 1])
     ax5.set_ylim(0.6, 1.0)
     ax5.legend(loc='lower right', edgecolor='none', handletextpad=0.3, labelspacing=0.2, borderpad=0.25, borderaxespad=0.2, handlelength=1.5)
-    ax5.grid(True, linestyle='--')
+    ax5.grid(True, linestyle='-')
     ax5.spines['right'].set_color('gray')
 
     print(nobatch_x)
-    ax6.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="*", s=100 , zorder=3)
+    ax6.scatter(nobatch_x, nolazy_y, color="grey", label="vanilla Ring ORAM", marker="^", s=60 , zorder=3)
     ax6.set_xlim(21, 23)
     ax6.set_xticks([22])
-    ax6.grid(True, linestyle='--')
+    ax6.grid(True, linestyle='-')
     ax6.set_yticks([0.6, 0.70, 0.80, 0.90, 1])
     ax6.set_ylim(0.6, 1.0)
     ax6.spines['left'].set_color('gray')
@@ -1066,12 +1137,66 @@ def render_figure8_all():
     # ax7.text(ef_spec_x[0] - 0.08, ef_spec_y[0] - 0.07, "efspec=1")
     # ax7.text(ef_spec_x[-1] + 0.15, ef_spec_y[-1] - 0.01, "efspec=16")
 
-    legend_efn, = ax7.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,128]", marker='>', linestyle='-', zorder=2, markersize = 5)
-    legend_efspec, = ax7.plot(ef_spec_x, ef_spec_y, marker='<', linestyle='-', color="#019e73", label="efspec:[1,8]" , zorder=2, markersize = 5)
+    legend_efn, = ax7.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,128]", marker='s', linestyle='-', zorder=2, markersize = 4)
+    legend_efspec, = ax7.plot(ef_spec_x, ef_spec_y, marker='o', linestyle='-', color="#019e73", label="efspec:[1,8]" , zorder=2, markersize = 4)
+
+    diff_y = ef_neighbor_y[-1] - ef_neighbor_y[-2]
+    diff_x = ef_neighbor_x[-1] - ef_neighbor_x[-2]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax7.annotate(
+        '', 
+        xy=(ef_neighbor_x[-1] - diff_x*0.4, ef_neighbor_y[-1] - diff_y*0.4 - 0.02), xycoords='data',
+        xytext=(ef_neighbor_x[-1], ef_neighbor_y[-1] - 0.02), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#fd8282", mutation_scale=10),
+    )
+
+    diff_y = ef_spec_y[-2] - ef_spec_y[-1]
+    diff_x = ef_spec_x[-2] - ef_spec_x[-1]
+    # length = math.sqrt(diff_x**2 + diff_y**2)
+    # diff_x, diff_y = diff_x / length, diff_y / length
+    ax7.annotate(
+        '', 
+        xy=(ef_spec_x[-1] + diff_x*0.3 + 0.1, ef_spec_y[-1]+ diff_y*0.3), xycoords='data',
+        xytext=(ef_spec_x[-1] + 0.1, ef_spec_y[-1]), textcoords='data',
+        arrowprops=dict(arrowstyle='->', color="#019e73", mutation_scale=10),
+    )
+
+    # Add arrows at midpoint between data points
+    # x = ef_neighbor_x
+    # y = ef_neighbor_y
+    # for i in range(len(x)-1):
+    #     # Calculate midpoint coordinates
+    #     mid_x = (x[i] + x[i+1]) / 2
+    #     mid_y = (y[i] + y[i+1]) / 2
+        
+    #     # Calculate direction vector (dx, dy)
+    #     dx = x[i+1] - x[i]
+    #     dy = y[i+1] - y[i]
+        
+    #     ax7.annotate(
+    #         '',
+    #         xy=(mid_x + 0.001*dx, mid_y + 0.001*dy),  # small offset for direction clarity
+    #         xytext=(mid_x, mid_y),
+    #         arrowprops=dict(arrowstyle='->', color="#fd8282", mutation_scale=10),
+    #     )
+
+
+    # legend_efn, = ax7.plot(ef_neighbor_x, ef_neighbor_y, color="#fd8282", label="efn:[1,128]", linestyle='-', zorder=2, markersize = 4)
+    # legend_efspec, = ax7.plot(ef_spec_x, ef_spec_y, linestyle='-', color="#019e73", label="efspec:[1,8]" , zorder=2, markersize = 4)
+
+    # for i in range(len(ef_neighbor_x)-1):
+    #     ax7.annotate(
+    #         '', 
+    #         xy=(ef_neighbor_x[i+1], ef_neighbor_y[i+1]), xycoords='data',
+    #         xytext=(ef_neighbor_x[i], ef_neighbor_y[i]), textcoords='data',
+    #         arrowprops=dict(arrowstyle="->", color='blue', lw=1.5),
+    #     )
+
 
     legend_compass = ax7.scatter(compass_trip_latency, compass_trip_acc, color="#e6a002", label="Compass" ,marker="*", s=100 , zorder=3)
 
-    legend_compass_lazy = ax7.scatter(nolazy_x, nolazy_y, color="#0072B2", label="Compass w/o Lazy Eviction" , marker="*", s=100 , zorder=3)
+    legend_compass_lazy = ax7.scatter(nolazy_x, nolazy_y, color="#0072B2", label="Compass w/o Lazy Eviction" , marker="p", s=60 , zorder=3)
 
     ax7.set_title('LAION', fontsize=14)
     ax7.set_xlabel('Latency (s)', fontsize=14, labelpad = 0)
@@ -1082,14 +1207,14 @@ def render_figure8_all():
     ax7.set_yticks([0.4, 0.55, 0.70, 0.85, 1])
     ax7.set_ylim(0.4, 1)
     ax7.legend([legend_efn, legend_efspec], [legend_efn.get_label(), legend_efspec.get_label()], edgecolor='none', loc='lower right', handletextpad=0.3, labelspacing=0.2, borderpad=0.25, borderaxespad=0.2, handlelength=1.5)
-    ax7.grid(True, linestyle='--')
+    ax7.grid(True, linestyle='-')
     ax7.spines['right'].set_color('gray')
 
     print(nobatch_x)
-    legend_compass_vanilla = ax8.scatter(nobatch_x, nolazy_y, color="grey", label="Compass w/ vanilla Ring ORAM", marker="*", s=100 , zorder=3)
+    legend_compass_vanilla = ax8.scatter(nobatch_x, nolazy_y, color="grey", label="Compass w/ vanilla Ring ORAM", marker="^", s=60 , zorder=3)
     ax8.set_xlim(11, 13)
     ax8.set_xticks([12])
-    ax8.grid(True, linestyle='--')
+    ax8.grid(True, linestyle='-')
     ax8.set_yticks([0.4, 0.55, 0.70, 0.85, 1])
     ax8.set_ylim(0.4, 1)
     ax8.spines['left'].set_color('gray')

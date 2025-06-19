@@ -1,3 +1,7 @@
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42  # Use TrueType fonts
+matplotlib.rcParams['ps.fonttype'] = 42
+
 import matplotlib.pyplot as plt
 import numpy as np
 import os
