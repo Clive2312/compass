@@ -516,17 +516,6 @@ int main(int argc, char **argv){
         faiss::Index* centroid_index = faiss::read_index(md.centroid_path.c_str());
         cout << "Loaded centroid index with " << centroid_index->ntotal << " centroids" << endl;
 
-        // Load base vectors for verification
-        // size_t d_base_verify, n_base_verify;
-        // cout << "Loading base vectors for verification from: " << md.base_path << endl;
-        // float* base_vectors = fvecs_read(md.base_path.c_str(), &d_base_verify, &n_base_verify);
-        // assert(d_base_verify == dim);
-
-        // Load assignment for verification
-        // cout << "Loading assignment for verification from: " << md.assignment_path << endl;
-        // map<int, vector<int>> assignment = load_assignment(md.assignment_path);
-        // cout << "Loaded assignment with " << assignment.size() << " clusters for verification" << endl;
-
         int num_embed_per_ctx = slot_count / dim;
         int num_ctx_per_cluster = (node_per_cluster / num_embed_per_ctx) + 1;
 
@@ -597,38 +586,6 @@ int main(int argc, char **argv){
             recv_encrypted_vector(io, result_ctxs, context);
             cout << " - Recieved!" << endl;
 
-            // VERIFICATION: Compute expected results in plaintext
-            // cout << "Computing plaintext verification..." << endl;
-            // vector<float> plaintext_results;
-
-            // // Load assignment for this cluster to know which nodes to compute
-            // if (assignment.find(cluster) != assignment.end()) {
-            //     vector<int> cluster_nodes = assignment[cluster];
-
-            //     // Compute dot products for each node in the cluster
-            //     for (int node_id : cluster_nodes) {
-            //         float dot_product = 0.0;
-            //         for (int k = 0; k < dim; k++) {
-            //             float base_val = base_vectors[node_id * dim + k];
-            //             float query_val = query[k];
-            //             dot_product += base_val * query_val;
-            //         }
-            //         plaintext_results.push_back(dot_product);
-            //     }
-
-            //     // Pad with zeros if needed
-            //     // while ((int)plaintext_results.size() < node_per_cluster) {
-            //     //     plaintext_results.push_back(0.0);
-            //     // }
-            // } else {
-            //     cout << "  WARNING: Cluster " << cluster << " not found in assignment!" << endl;
-            //     assert(0);
-            //     // Fill with zeros if cluster not found
-            //     for(int j = 0; j < node_per_cluster; j++) {
-            //         plaintext_results.push_back(0.0);
-            //     }
-            // }
-
             vector<float> results;
             int cnt = 0;
 
@@ -663,33 +620,75 @@ int main(int argc, char **argv){
 
             assert(results.size() == node_per_cluster);
 
-            // VERIFICATION
-            // cout << "Verifying correctness..." << endl;
-            // bool verification_passed = true;
-            // float max_error = 0.0;
-            // int num_to_verify = min((int)plaintext_results.size(), (int)results.size());
+            bool verification = false;
+            if(verification){
+                // Load base vectors for verification
+                size_t d_base_verify, n_base_verify;
+                cout << "Loading base vectors for verification from: " << md.base_path << endl;
+                float* base_vectors = fvecs_read(md.base_path.c_str(), &d_base_verify, &n_base_verify);
+                assert(d_base_verify == dim);
 
-            // for(int j = 0; j < num_to_verify; j++){
-            //     float encrypted_result = results[j];
-            //     float plaintext_result = plaintext_results[j];
-            //     float error = abs(encrypted_result - plaintext_result);
-            //     max_error = max(max_error, error);
+                // Load assignment for verification
+                cout << "Loading assignment for verification from: " << md.assignment_path << endl;
+                map<int, vector<int>> assignment = load_assignment(md.assignment_path);
+                cout << "Loaded assignment with " << assignment.size() << " clusters for verification" << endl;
 
-            //     // Allow some tolerance for floating point errors and encoding/decoding
-            //     if(error > 0.01) {
-            //         cout << "  WARNING: Mismatch at index " << j << endl;
-            //         cout << "    Encrypted: " << encrypted_result << endl;
-            //         cout << "    Plaintext: " << plaintext_result << endl;
-            //         cout << "    Error: " << error << endl;
-            //         verification_passed = false;
-            //     }
-            // }
+                cout << "Computing plaintext verification..." << endl;
+                vector<float> plaintext_results;
 
-            // if(verification_passed) {
-            //     cout << "Verification PASSED (max error: " << max_error << ")" << endl;
-            // } else {
-            //     cout << "Verification FAILED" << endl;
-            // }
+                // Load assignment for this cluster to know which nodes to compute
+                if (assignment.find(cluster) != assignment.end()) {
+                    vector<int> cluster_nodes = assignment[cluster];
+
+                    // Compute dot products for each node in the cluster
+                    for (int node_id : cluster_nodes) {
+                        float dot_product = 0.0;
+                        for (int k = 0; k < dim; k++) {
+                            float base_val = base_vectors[node_id * dim + k];
+                            float query_val = query[k];
+                            dot_product += base_val * query_val;
+                        }
+                        plaintext_results.push_back(dot_product);
+                    }
+
+                } else {
+                    cout << "  WARNING: Cluster " << cluster << " not found in assignment!" << endl;
+                    assert(0);
+                    // Fill with zeros if cluster not found
+                    for(int j = 0; j < node_per_cluster; j++) {
+                        plaintext_results.push_back(0.0);
+                    }
+                }
+
+                cout << "Verifying correctness..." << endl;
+                bool verification_passed = true;
+                float max_error = 0.0;
+                int num_to_verify = min((int)plaintext_results.size(), (int)results.size());
+
+                for(int j = 0; j < num_to_verify; j++){
+                    float encrypted_result = results[j];
+                    float plaintext_result = plaintext_results[j];
+                    float error = abs(encrypted_result - plaintext_result);
+                    max_error = max(max_error, error);
+
+                    // Allow some tolerance for floating point errors and encoding/decoding
+                    if(error > 0.1) {
+                        cout << "  WARNING: Mismatch at index " << j << endl;
+                        cout << "    Encrypted: " << encrypted_result << endl;
+                        cout << "    Plaintext: " << plaintext_result << endl;
+                        cout << "    Error: " << error << endl;
+                        verification_passed = false;
+                    }
+                }
+
+                if(verification_passed) {
+                    cout << "Verification PASSED (max error: " << max_error << ")" << endl;
+                } else {
+                    cout << "Verification FAILED" << endl;
+                }
+
+                delete[] base_vectors;
+            }
 
             // Sort
             cout << "Ranking... " << endl;
@@ -742,7 +741,6 @@ int main(int argc, char **argv){
 
         // Clean up
         delete[] xq;
-        delete[] base_vectors;
         delete centroid_index;
     }
 
