@@ -24,7 +24,7 @@ set(FAISS_SRC
 #     utils/io.h
 # )
 
-add_library(faiss ${FAISS_SRC})
-target_link_libraries(faiss PRIVATE oram_library)
+add_library(compass_faiss ${FAISS_SRC})
+target_link_libraries(compass_faiss PRIVATE oram_library)
 
 # set(FAISS_HEADERS ${FAISS_HEADERS} PARENT_SCOPE)

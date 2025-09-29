@@ -1,0 +1,38 @@
+{
+    "laion": {
+        "base_path": "../data/dataset/laion1m/100k/laion_base.fvecs",
+        "query_path": "../data/dataset/laion1m/laion_query.fvecs",
+        "gt_path": "../data/dataset/laion1m/100k/gt.ivecs",
+        "config_n_centroids": 400,
+        "config_max_nodes_per_centroids": 500,
+        "nc": 408,
+        "node_per_cluster": 708,
+        "centroid_path": "../data/dataset/laion1m/100k/cluster_centroids.index",
+        "result_path": "../data/dataset/laion1m/100k/cluster_laion.ivecs",
+        "assignment_path": "../data/dataset/laion1m/100k/cluster_assignment.bin"
+    },
+    "sift": {
+        "base_path": "../data/dataset/sift/base.fvecs",
+        "query_path": "../data/dataset/sift/query.fvecs",
+        "gt_path": "../data/dataset/sift/gt.ivecs",
+        "config_n_centroids": 1200,
+        "config_max_nodes_per_centroids": 1000,
+        "nc": 1453,
+        "node_per_cluster": 1361,
+        "centroid_path": "../data/dataset/sift/cluster_centroids.index",
+        "result_path": "../data/dataset/sift/cluster_sift.ivecs",
+        "assignment_path": "../data/dataset/sift/cluster_assignment.bin"
+    },
+    "trip": {
+        "base_path": "../data/dataset/trip_distilbert/passages.fvecs",
+        "query_path": "../data/dataset/trip_distilbert/queries.fvecs",
+        "gt_path": "../data/dataset/trip_distilbert/gt_10.ivecs",
+        "config_n_centroids": 1500,
+        "config_max_nodes_per_centroids": 2000,
+        "nc": 1528,
+        "node_per_cluster": 2935,
+        "centroid_path": "../data/dataset/trip_distilbert/cluster_centroids.index",
+        "result_path": "../data/dataset/trip_distilbert/cluster_trip.ivecs",
+        "assignment_path": "../data/dataset/trip_distilbert/cluster_assignment.bin"
+    }
+}
